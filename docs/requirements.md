@@ -75,7 +75,7 @@ Patients will input their feelings and experiences as in a journal and the thera
 ## About the Data
 16. What data do you have that might be related, in any way, to the problem being solved?
 
-Previous interactions of the patients with their therapists.
+Previous interactions of the patients with their therapists. For privacy issues, the patient's identity is not revealed. Contains only the text corpus of how the patients interacted with their therapists.
 
 17. How is the data stored?
 
