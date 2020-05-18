@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Sentiment Classification</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+
+<h3>Sentiment:</h3>
+<div>{{ content }}</div>
+
+<h3>Prediction:</h3>
+<div>You are feeling <strong>{{ prediction }}</strong>
+	 (probability: {{ probability }}%).<br><br>
+</div>
+
+<div>
+
+<ol> 
+<!-- For loop logic of jinja template -->
+{%for i in range(0, 5) %} 
+  
+    <li>{{database[i]}}</li> 
+{%endfor%} 
+  
+</ol>
+
+</div>
+
+<br></br>
+
+<div id='button'>
+	  <form action="/">
+	    <input type=submit value='Another Sentimnt'>
+	  </form>
+</div>
+
+  </body>
+</html>
