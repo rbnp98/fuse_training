@@ -1,0 +1,7 @@
+Flask
+WTForms
+pymongo
+numpy
+pandas 
+scikit-learn
+joblib
