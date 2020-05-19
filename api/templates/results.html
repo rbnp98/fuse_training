@@ -6,19 +6,24 @@
   </head>
   <body>
 
-<h3>Sentiment:</h3>
+<h3>Emotion: </h3>
 <div>{{ content }}</div>
 
 <h3>Prediction:</h3>
+
 <div>You are feeling <strong>{{ prediction }}</strong>
 	 (probability: {{ probability }}%).<br><br>
 </div>
 
 <div>
 
+<h3>
+  Current Database Entries
+</h3>
+
 <ol> 
 <!-- For loop logic of jinja template -->
-{%for i in range(0, 5) %} 
+{%for i in range(0, len) %} 
   
     <li>{{database[i]}}</li> 
 {%endfor%} 
