@@ -4,7 +4,8 @@ import pickle
 import pymongo
 import os
 import numpy as np
-from sklearn.externals import joblib
+import joblib
+#from sklearn.externals import joblib
 
 loaded_model=joblib.load("./pkl_objects/model.pkl")
 loaded_stop=joblib.load("./pkl_objects/stopwords.pkl")
@@ -19,6 +20,7 @@ def classify(document):
     X = loaded_vec.transform([document])
     y = loaded_model.predict(X)[0]
     proba = np.max(loaded_model.predict_proba(X))
+    #count += 1
     return label[y], proba
 
 
@@ -42,14 +44,14 @@ def results():
       
         
         y, proba = classify(review)
-        myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+        myclient = pymongo.MongoClient("mongodb://localhost:27017")
         mydb = myclient["mydatabase"]
-        mycol = mydb["predictions"]
+        mycol = mydb["prediction"]
         predictions = {"sentence": review, "predicted class": y, "probability": proba}
         mycol.insert_one(predictions)
-        return render_template('results.html',content=review,prediction=y,probability=round(proba*100, 2), database = [i for i in mycol.find()])
+        return render_template('results.html',content=review,prediction=y,probability=round(proba*100, 2) , database = [i for i in mycol.find()], len = len([i for i in mycol.find()]))
     return render_template('reviewform.html', form=form)
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
