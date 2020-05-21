@@ -1,12 +1,12 @@
 <!doctype html>
 <html>
   <head>
-    <title>Sentiment Classification</title>
-	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Emotion Detection</title>
+	<link rel="stylesheet" href=>
   </head>
   <body>
-
-<h2>Please ENter your Current Sentiment</h2>
+<div width="400px" margin-left="200px">
+<h2>Please enter how you feel?</h2>
 
 {% from "_formhelpers.html" import render_field %}
 
@@ -14,10 +14,9 @@
   <dl>
 	{{ render_field(form.sentiment, cols='30', rows='10') }}
   </dl>
-  <div>
-	  <input type=submit value='Submit Sentiment' name='submit_btn'>
-  </div>
-</form>
 
+	  <input type=submit value='Submit' name='submit_btn'>
+</form>
+</div>
   </body>
 </html>

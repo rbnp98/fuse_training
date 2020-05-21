@@ -4,6 +4,7 @@ import pickle
 import pymongo
 import os
 import numpy as np
+import time
 from sklearn.externals import joblib
 
 loaded_model=joblib.load("./pkl_objects/model.pkl")
@@ -15,7 +16,7 @@ loaded_vec=joblib.load("./pkl_objects/vectorizer.pkl")
 app = Flask(__name__)
 
 def classify(document):
-    label = {0: 'anger', 1: 'disgust', 2: 'fear', 3: 'guilt', 4 :'joy', 5: 'sadness', 6:'shame'}
+    label = {0: 'angry', 1: 'disgusted', 2: 'fearful', 3: 'guilty', 4 :'joyful', 5: 'sad', 6:'ashamed'}
     X = loaded_vec.transform([document])
     y = loaded_model.predict(X)[0]
     proba = np.max(loaded_model.predict_proba(X))
@@ -36,19 +37,21 @@ def results():
     lis = list()
     form = SentimentForm(request.form)
     if request.method == 'POST' and form.validate():
-        mydict = { "name": "John", "address": "Highway 37" }
+       
 
         review = request.form['sentiment']
       
         
         y, proba = classify(review)
         myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-        mydb = myclient["mydatabase"]
-        mycol = mydb["predictions"]
-        predictions = {"sentence": review, "predicted class": y, "probability": proba}
+        mydb = myclient["emotion_detection"]
+        mycol = mydb["past_predictions"]
+        predictions = {"sentence": review, "predicted class": y, "probability": proba, "time":time.ctime(time.time())}
         mycol.insert_one(predictions)
-        return render_template('results.html',content=review,prediction=y,probability=round(proba*100, 2), database = [i for i in mycol.find()])
+        return render_template('results.html',content=review,prediction=y,probability=round(proba*100, 2), database = [i for i in mycol.find()], count = len([i for i in mycol.find()]))
     return render_template('reviewform.html', form=form)
+
+#print(type(i))
 
 
 if __name__ == '__main__':
