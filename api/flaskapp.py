@@ -43,7 +43,7 @@ def results():
       
         
         y, proba = classify(review)
-        myclient = pymongo.MongoClient("mongodb://localhost:27017/")
+        myclient = pymongo.MongoClient("mongodb://db:27017/")
         mydb = myclient["emotion_detection"]
         mycol = mydb["past_predictions"]
         predictions = {"sentence": review, "predicted class": y, "probability": proba, "time":time.ctime(time.time())}
@@ -55,4 +55,4 @@ def results():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
